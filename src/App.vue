@@ -1,28 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h3>Inicia la cuenta regresiva en...</h3>
+    <button @click="setCountdown(4)">4 segs</button>
+    <button @click="setCountdown(10)">10 segs</button>
+    <button @click="setCountdown(24)">24 segs</button>
+    <div id="showCountdown">---> {{countDown}} segundos</div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld,
+  data: ()=>{
+    return{
+      countDown: 0,
+      active: false
+    }
   },
+  methods: {
+    setCountdown(value){
+      
+      this.countDown = value
+      if (this.active == true ) { //Intentando detener el countdown al apretar un botón si este ya ha iniciado, pero no funciona
+        clearInterval(time)
+      }
+      let time = setInterval(() => {
+          this.active == true
+          this.countDown--
+          if (this.countDown==0) {
+            clearInterval(time);
+            this.active == false
+          }
+      }, 1000);
+    }
+  } 
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped lang="scss">
+  #showCountdown{
+    margin: 10px;
+  }
+  button{
+    display: inline-block;
+    margin-right: 5px;
+  }
 </style>
